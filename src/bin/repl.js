@@ -19,5 +19,21 @@
 import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 
+console.log(`
++-----------------------------------------------+
+| Welcome to the Chrysalis REPL!                |
+|                                               |
+| The following commands are available:         |
+|  - command(<command>, [<arguments...>])       |
+|  - exit()                                     |
++-----------------------------------------------+
+`)
+
 let port = new SerialPort("/dev/ttyACM0") ,
-    focus = new Focus(port)
+    focus = new Focus(port),
+    command = (cmd, args = []) => {
+        focus.command(cmd, args).then((data) => {
+            console.log(data)
+        })
+    },
+    exit = process.exit
