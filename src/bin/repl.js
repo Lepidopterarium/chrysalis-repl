@@ -18,6 +18,7 @@
 
 import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
+import Keymap from "chrysalis-keymap"
 
 console.log(`
 +-----------------------------------------------+
@@ -31,9 +32,12 @@ console.log(`
 
 let port = new SerialPort("/dev/ttyACM0") ,
     focus = new Focus(port),
+    keymap = new Keymap(64),
     command = (cmd, args = []) => {
         focus.command(cmd, args).then((data) => {
             console.log(data)
         })
     },
     exit = process.exit
+
+focus.addCommands({keymap: keymap})

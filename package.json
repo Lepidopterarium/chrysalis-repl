@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "chrysalis-focus": "git://github.com/Lepidopterarium/chrysalis-focus.git#master",
+        "chrysalis-keymap": "../chrysalis-keymap",
         "serialport": "latest"
     },
     "devDependencies": {
