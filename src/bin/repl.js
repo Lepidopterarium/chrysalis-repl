@@ -19,6 +19,7 @@
 import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
+import repl from 'repl'
 
 console.log(`
 +-----------------------------------------------+
@@ -30,14 +31,20 @@ console.log(`
 +-----------------------------------------------+
 `)
 
-let port = new SerialPort("/dev/ttyACM0") ,
+let replServer = repl.start({
+    prompt: "chrysalis> "
+})
+
+let port = new SerialPort("/dev/ttyACM0"),
     focus = new Focus(port),
     keymap = new Keymap(64),
     command = (cmd, args = []) => {
         focus.command(cmd, args).then((data) => {
             console.log(data)
         })
-    },
-    exit = process.exit
+    }
 
 focus.addCommands({keymap: keymap})
+
+replServer.context.command = command
+replServer.context.exit = process.exit

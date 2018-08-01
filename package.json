@@ -14,7 +14,7 @@
     "license": "GPL-3.0+",
     "scripts": {
         "build": "babel src/bin -d bin",
-        "repl": "node-repl bin/repl.js"
+        "repl": "node bin/repl.js"
     },
     "dependencies": {
         "chrysalis-focus": "git://github.com/Lepidopterarium/chrysalis-focus.git#master",
@@ -23,7 +23,6 @@
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "node-repl": "^2.0.2"
+        "babel-preset-env": "^1.7.0"
     }
 }
