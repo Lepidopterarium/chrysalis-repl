@@ -51,7 +51,7 @@ let port = new SerialPort("/dev/ttyACM0"),
     io = new Proxy({}, {
         get: (target, name) => {
             return (args) => {
-                return command(name)
+                return command(name, args)
             }
         }
     })
