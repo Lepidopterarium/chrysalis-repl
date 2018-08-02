@@ -28,7 +28,11 @@ console.log(`
 |                                               |
 | The following commands are available:         |
 |  - command(<command>, [<arguments...>])       |
+|  - io.<command>([<arguments>])                |
 |  - exit()                                     |
+|                                               |
+| For example:                                  |
+|  > io.help()                                  |
 +-----------------------------------------------+
 `)
 
@@ -43,10 +47,18 @@ let port = new SerialPort("/dev/ttyACM0"),
         focus.command(cmd, args).then((data) => {
             console.log(data)
         })
-    }
+    },
+    io = new Proxy({}, {
+        get: (target, name) => {
+            return (args) => {
+                return command(name)
+            }
+        }
+    })
 
 keymap.addKeyTransformers([new CPPTransformer()])
 focus.addCommands({keymap: keymap})
 
 replServer.context.command = command
 replServer.context.exit = process.exit
+replServer.context.io = io
