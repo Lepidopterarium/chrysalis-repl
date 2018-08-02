@@ -19,6 +19,7 @@
 import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
+import CPPTransformer from "chrysalis-keymap-transformer-cpp"
 import repl from "repl"
 
 console.log(`
@@ -44,6 +45,7 @@ let port = new SerialPort("/dev/ttyACM0"),
         })
     }
 
+keymap.addKeyTransformers([new CPPTransformer()])
 focus.addCommands({keymap: keymap})
 
 replServer.context.command = command

@@ -19,6 +19,7 @@
     "dependencies": {
         "chrysalis-focus": "git://github.com/Lepidopterarium/chrysalis-focus.git#master",
         "chrysalis-keymap": "git://github.com/Lepidopterarium/chrysalis-keymap.git#master",
+        "chrysalis-keymap-transformer-cpp": "git://github.com/Lepidopterarium/chrysalis-keymap-transformer-cpp.git#master",
         "serialport": "latest"
     },
     "devDependencies": {
