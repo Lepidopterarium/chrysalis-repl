@@ -19,7 +19,7 @@
 import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
-import repl from 'repl'
+import repl from "repl"
 
 console.log(`
 +-----------------------------------------------+
