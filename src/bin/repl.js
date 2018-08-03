@@ -21,6 +21,7 @@ import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
 import CPPTransformer from "chrysalis-keymap-transformer-cpp"
 import repl from "repl"
+import util from "util"
 
 console.log(`
 +-----------------------------------------------+
@@ -59,7 +60,9 @@ let focus = new Focus(),
     keymap = new Keymap(),
     command = (cmd, args = []) => {
         focus.command(cmd, args).then((data) => {
-            console.log(data)
+            process.stdout.write("\r          \r")
+            process.stdout.write(util.format(data))
+            process.stdout.write("\n\nchrysalis> ")
         })
     },
     io = new Proxy({}, {
