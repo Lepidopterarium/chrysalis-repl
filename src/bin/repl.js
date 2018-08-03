@@ -27,9 +27,13 @@ console.log(`
 | Welcome to the Chrysalis REPL!                |
 |                                               |
 | The following commands are available:         |
+|  - open(<device>)                             |
 |  - command(<command>, [<arguments...>])       |
 |  - io.<command>([<arguments>])                |
 |  - exit()                                     |
+|                                               |
+| Supported devices:                            |
+|  - Model01                                    |
 |                                               |
 | For example:                                  |
 |  > io.help()                                  |
@@ -40,9 +44,19 @@ let replServer = repl.start({
     prompt: "chrysalis> "
 })
 
-let port = new SerialPort("/dev/ttyACM0"),
-    focus = new Focus(port),
-    keymap = new Keymap(64),
+let Model01 = {
+    usb: {
+        vendorId: 0x1209,
+        productId: 0x2301
+    },
+    keyboard: {
+        rows: 4,
+        columns: 16
+    }
+}
+
+let focus = new Focus(),
+    keymap = new Keymap(),
     command = (cmd, args = []) => {
         focus.command(cmd, args).then((data) => {
             console.log(data)
@@ -54,11 +68,17 @@ let port = new SerialPort("/dev/ttyACM0"),
                 return command(name, args)
             }
         }
-    })
+    }),
+    open = (device) => {
+        focus.open(device)
+        keymap.setLayerSize(device)
+    }
 
 keymap.addKeyTransformers([new CPPTransformer()])
 focus.addCommands({keymap: keymap})
 
+replServer.context.Model01 = Model01
+replServer.context.open = open
 replServer.context.command = command
 replServer.context.exit = process.exit
 replServer.context.io = io
