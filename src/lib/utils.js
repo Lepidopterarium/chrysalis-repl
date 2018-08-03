@@ -19,7 +19,7 @@ function pad(str, len) {
     str = String(str);
     var i = -1;
     if (!len || len <= 0)
-        len = 10
+        len = 15
     len = len - str.length;
     while (++i < len) {
         str = str + " ";
@@ -94,7 +94,7 @@ function format_layer(idx, layer) {
         k(1, 13) + "," +
         k(1, 14) + "," +
         k(1, 15, true) + "\n" +
-        "               ," +
+        "                    ," +
         k(2, 10) + "," +
         k(2, 11) + "," +
         k(2, 12) + "," +
