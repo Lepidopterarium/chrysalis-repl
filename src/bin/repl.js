@@ -23,8 +23,13 @@ import CPPTransformer from "chrysalis-keymap-transformer-cpp"
 
 import { Model01 } from "chrysalis-hardware-keyboardio-model01"
 
+import { keymap_format } from "../lib/utils.js"
+
+import child_process from "child_process"
+import fs from "fs"
 import repl from "repl"
 import util from "util"
+import tmp from "tmp"
 
 console.log(`
 +-----------------------------------------------+
@@ -67,6 +72,25 @@ let focus = new Focus(),
     open = (device) => {
         focus.open(device)
         keymap.setLayerSize(device)
+    },
+    edit_keymap = () => {
+        let editor = process.env.EDITOR || "vim",
+            tmpfile = tmp.fileSync({
+                prefix: "chrysalis-keymap-",
+                postfix: ".cpp"
+            })
+
+        focus.command("keymap").then((keymap) => {
+            fs.writeSync(tmpfile.fd, keymap_format(keymap))
+
+            child_process.spawnSync(editor, [tmpfile.name], {
+                stdio: "inherit"
+            })
+
+            process.stdout.write("\r          \r")
+            process.stdout.write("<updating not implemented yet>")
+            process.stdout.write("\n\nchrysalis> ")
+        })
     }
 
 keymap.addKeyTransformers([new CPPTransformer()])
@@ -77,3 +101,4 @@ replServer.context.open = open
 replServer.context.command = command
 replServer.context.exit = process.exit
 replServer.context.io = io
+replServer.context.edit_keymap = edit_keymap
