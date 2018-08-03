@@ -39,6 +39,7 @@ console.log(`
 |  - open(<device>)                             |
 |  - command(<command>, [<arguments...>])       |
 |  - io.<command>([<arguments>])                |
+|  - edit_keymap()                              |
 |  - exit()                                     |
 |                                               |
 | Supported devices:                            |
