@@ -20,6 +20,9 @@ import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
 import CPPTransformer from "chrysalis-keymap-transformer-cpp"
+
+import { Model01 } from "chrysalis-hardware-keyboardio-model01"
+
 import repl from "repl"
 import util from "util"
 
@@ -44,17 +47,6 @@ console.log(`
 let replServer = repl.start({
     prompt: "chrysalis> "
 })
-
-let Model01 = {
-    usb: {
-        vendorId: 0x1209,
-        productId: 0x2301
-    },
-    keyboard: {
-        rows: 4,
-        columns: 16
-    }
-}
 
 let focus = new Focus(),
     keymap = new Keymap(),
