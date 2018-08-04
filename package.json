@@ -21,7 +21,6 @@
         "chrysalis-hardware-keyboardio-model01": "git://github.com/Lepidopterarium/chrysalis-hardware-keyboardio-model01.git#master",
         "chrysalis-keymap": "git://github.com/Lepidopterarium/chrysalis-keymap.git#master",
         "chrysalis-keymap-transformer-cpp": "git://github.com/Lepidopterarium/chrysalis-keymap-transformer-cpp.git#master",
-        "serialport": "latest",
         "tmp": "0.0.33"
     },
     "devDependencies": {

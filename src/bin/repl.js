@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import SerialPort from "serialport"
 import Focus from "chrysalis-focus"
 import Keymap from "chrysalis-keymap"
 import CPPTransformer from "chrysalis-keymap-transformer-cpp"
