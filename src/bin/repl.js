@@ -36,6 +36,7 @@ console.log(`
 | Welcome to the Chrysalis REPL!                |
 |                                               |
 | The following commands are available:         |
+|  - find([<devices...>])                       |
 |  - open(<device>)                             |
 |  - command(<command>, [<arguments...>])       |
 |  - io.<command>([<arguments>])                |
@@ -74,6 +75,15 @@ let focus = new Focus(),
         focus.open(device)
         keymap.setLayerSize(device)
     },
+    find = (...devices) => {
+        if (devices.length == 0)
+            devices = Model01
+        focus.find(devices).then((data) => {
+            process.stdout.write("\r          \r")
+            process.stdout.write(util.format(data))
+            process.stdout.write("\n\nchrysalis> ")
+        })
+    },
     edit_keymap = () => {
         let editor = process.env.EDITOR || "vim",
             tmpfile = tmp.fileSync({
@@ -103,3 +113,4 @@ replServer.context.command = command
 replServer.context.exit = process.exit
 replServer.context.io = io
 replServer.context.edit_keymap = edit_keymap
+replServer.context.find = find
