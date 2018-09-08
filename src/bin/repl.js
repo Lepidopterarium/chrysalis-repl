@@ -55,12 +55,11 @@ let replServer = repl.start({
 
 let focus = new Focus(),
     keymap = new Keymap(),
-    command = (cmd, args = []) => {
-        focus.command(cmd, args).then((data) => {
-            process.stdout.write("\r          \r")
-            process.stdout.write(util.format(data))
-            process.stdout.write("\n\nchrysalis> ")
-        })
+    command = async (cmd, args = []) => {
+        let data = await focus.command(cmd, args)
+        process.stdout.write("\r          \r")
+        process.stdout.write(util.format(data))
+        process.stdout.write("\n\nchrysalis> ")
     },
     io = new Proxy({}, {
         get: (target, name) => {
@@ -73,33 +72,32 @@ let focus = new Focus(),
         focus.open(device)
         keymap.setLayerSize(device)
     },
-    find = (...devices) => {
+    find = async (...devices) => {
         if (devices.length == 0)
             devices = Model01
-        focus.find(devices).then((data) => {
-            process.stdout.write("\r          \r")
-            process.stdout.write(util.format(data))
-            process.stdout.write("\n\nchrysalis> ")
-        })
+
+        let data = await focus.find(devices)
+        process.stdout.write("\r          \r")
+        process.stdout.write(util.format(data))
+        process.stdout.write("\n\nchrysalis> ")
     },
-    edit_keymap = () => {
+    edit_keymap = async () => {
         let editor = process.env.EDITOR || "vim",
             tmpfile = tmp.fileSync({
                 prefix: "chrysalis-keymap-",
                 postfix: ".cpp"
             })
 
-        focus.command("keymap").then((keymap) => {
-            fs.writeSync(tmpfile.fd, keymap_format(keymap))
+        let keymap = await focus.command("keymap")
+        fs.writeSync(tmpfile.fd, keymap_format(keymap))
 
-            child_process.spawnSync(editor, [tmpfile.name], {
-                stdio: "inherit"
-            })
-
-            process.stdout.write("\r          \r")
-            process.stdout.write("<updating not implemented yet>")
-            process.stdout.write("\n\nchrysalis> ")
+        child_process.spawnSync(editor, [tmpfile.name], {
+            stdio: "inherit"
         })
+
+        process.stdout.write("\r          \r")
+        process.stdout.write("<updating not implemented yet>")
+        process.stdout.write("\n\nchrysalis> ")
     }
 
 keymap.addKeyTransformers([new CPPTransformer()])
